@@ -1,4 +1,4 @@
-# Trilingual Sentiment Classifier
+# Multilingual Sentiment Classifier
 
 **Fine-tuned DistilBERT for sentiment classification across English, Hindi & Telugu**
 
