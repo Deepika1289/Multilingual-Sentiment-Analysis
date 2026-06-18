@@ -97,6 +97,8 @@ def generate_dataset():
                 "Outstanding performance, totally worth every penny",
                 "Five stars all the way, absolutely love this brand",
                 "Wow, just wow. This exceeded all my expectations!",
+                "Phenomenal experience, couldn't be happier!",
+                "This is pure excellence, highly impressed!",
             ],
             1: [  # Neutral
                 "Got my order today. It arrived on time.",
@@ -105,6 +107,10 @@ def generate_dataset():
                 "It works fine. No major complaints.",
                 "Average experience. Neither good nor bad.",
                 "Package arrived. Will use it and see.",
+                "The product is acceptable.",
+                "It meets expectations.",
+                "Standard delivery and packaging.",
+                "Normal purchase experience.",
             ],
             0: [  # Negative
                 "Terrible quality, completely disappointed 😡",
@@ -113,17 +119,24 @@ def generate_dataset():
                 "Product broke after 2 days. Awful experience.",
                 "Never buying from this brand again. Disgusting service.",
                 "Complete scam! Do not buy this product!",
+                "Very poor quality, major disappointment.",
+                "Extremely dissatisfied with this purchase.",
+                "Terrible experience from start to finish.",
+                "This is absolutely horrible, avoid at all costs!",
             ]
         },
         'hi': {  # Hindi (Devanagari)
             2: [
-                "बहुत बढ��िया उत्पाद है! बहुत खुश हूँ 😊",
+                "बहुत बढ़िया उत्पाद है! बहुत खुश हूँ 😊",
                 "शानदार सेवा, बहुत अच्छा लगा!",
                 "यह उत्पाद शानदार है, दोबारा जरूर खरीदूंगा!",
                 "असाधारण गुणवत्ता, सर्वश्रेष्ठ खरीद!",
                 "बहुत प्रभावशाली प्रदर्शन, पूरी तरह से संतुष्ट!",
                 "यह ब्रांड वाकई बेहतरीन है!",
                 "उम्मीद से भी ज्यादा अच्छा, धन्यवाद!",
+                "अद्भुत अनुभव, बिल्कुल पसंद आया!",
+                "शानदार गुणवत्ता और सेवा!",
+                "बेहतरीन उत्पाद, पूरी तरह संतुष्ट हूँ!",
             ],
             1: [
                 "ठीक है, काम चलाऊ है।",
@@ -132,6 +145,10 @@ def generate_dataset():
                 "समय पर डिलीवरी हुई।",
                 "औसत गुणवत्ता है।",
                 "सामान्य सेवा है।",
+                "ठीक है, काम हो गया।",
+                "सामान्य खरीद अनुभव।",
+                "कोई विशेष बात नहीं।",
+                "औसत उत्पाद।",
             ],
             0: [
                 "बहुत खराब है! बिल्कुल पसंद नहीं आया।",
@@ -140,6 +157,10 @@ def generate_dataset():
                 "बहुत निराशाजनक गुणवत्ता।",
                 "सेवा बहुत खराब थी।",
                 "पूरी तरह विफल, पैसे वापस करो!",
+                "भयानक अनुभव, बहुत निराशाजनक!",
+                "यह ब्रांड बिल्कुल खराब है।",
+                "बिल्कुल निरर्थक उत्पाद।",
+                "सबसे बुरी खरीद, पछतावा है!",
             ]
         },
         'te': {  # Telugu (Telangana/Andhra Pradesh)
@@ -151,6 +172,9 @@ def generate_dataset():
                 "చాలా చక్కగా ఉంది, సంపూర్ణంగా సంతృప్తిగా ఉన్నాను!",
                 "ఈ బ్రాండ్ నిజంగా చక్కని!",
                 "ఆశలకంటే చాలా బాగుంది, థాంక్యూ!",
+                "అద్భుత ఉత్పత్తి, చాలా సంతోషం!",
+                "శానిద్ధారణ సేవ మరియు నాణ్యత!",
+                "ఈ సంపూర్ణ అనుభవం చక్కని!",
             ],
             1: [
                 "సరిగానే ఉంది, పనిచేస్తుంది.",
@@ -159,6 +183,10 @@ def generate_dataset():
                 "సమయానికి డెలివరీ అయింది.",
                 "సామాన్య నాణ్యత.",
                 "సామాన్య సేవ.",
+                "సరిగానే ఉంది, సరిపోతుంది.",
+                "సాధారణ అనుభవం.",
+                "సరిపోయే ఉత్పత్తి.",
+                "సాధారణ సేవ.",
             ],
             0: [
                 "చాలా చెడ్డ ఉంది! చిట్టచివర్లకి నిరాశ చెందాను.",
@@ -167,6 +195,10 @@ def generate_dataset():
                 "నాణ్యత చాలా చెడ్డది.",
                 "సేవ చాలా చెడ్డది.",
                 "సంపూర్ణ విఫలం, డబ్బు తిరిగి ఇవ్వండి!",
+                "అత్యంత నిరాశాజనక అనుభవం!",
+                "ఈ బ్రాండ్ చాలా చెడ్డది.",
+                "సర్వథా నిరర్థక ఉత్పత్తి.",
+                "చెత్త ఉత్పత్తి, ఎప్పుడూ కొనకండి!",
             ]
         }
     }
@@ -175,8 +207,9 @@ def generate_dataset():
     for lang, sentiments in TWEETS.items():
         for label, tweet_list in sentiments.items():
             for tweet in tweet_list:
-                # Augment dataset by repeating samples
-                for _ in range(5):
+                # Augment dataset by repeating samples - increased for negative class
+                repetitions = 6 if label == 0 else 5  # More samples for negative class
+                for _ in range(repetitions):
                     rows.append({
                         'text': tweet,
                         'label': label,
